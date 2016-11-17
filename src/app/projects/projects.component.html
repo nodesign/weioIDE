@@ -1,0 +1,6 @@
+<div class="projects-p">
+  <div *ngFor="let item of (projectsList | projectsPipe)">
+    {{item.label}}
+    <div *ngFor="let subItem of item.children">{{subItem.label}}</div>
+  </div>
+</div>
