@@ -5,7 +5,7 @@ import { ProjectsService } from './projects.service';
 @Component({
   selector: 'app-projects',
   template: `<div class="projects-p">
-  <app-tree [items]="projectsList"></app-tree>
+  <app-tree [items]="projectsList" [path]="''" (notify)="itemSelected($event)"></app-tree>
 </div>`,
   styleUrls: ['./projects.component.scss'],
   providers: [ProjectsService]
@@ -24,9 +24,8 @@ export class ProjectsComponent implements OnInit {
   ngOnInit() {
   }
 
-  checkItem(item) {
-    console.log(typeof item.children);
-    return false;
+  itemSelected(item){
+    console.log(item);
   }
 
 }
