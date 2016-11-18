@@ -6,12 +6,16 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectsPipe } from './projects/projects.pipe';
+import { TreeComponent } from './utils/tree/tree.component';
+import { TreePipe } from './utils/tree/tree.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProjectsComponent,
-    ProjectsPipe
+    ProjectsPipe,
+    TreeComponent,
+    TreePipe
   ],
   imports: [
     BrowserModule,
