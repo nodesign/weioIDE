@@ -5,9 +5,20 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ProjectsPipe implements PipeTransform {
 
+  arr: Array<any> = [];
+
   transform(value: any, args?: any): any {
-    console.log(value, args);
-    return null;
+
+    return value.map((item, index) => {
+      console.log('item', item, 'index', index, 'type', typeof item);
+      return item;
+    });
+  }
+
+  getChildren(items) {
+    items.map((item,index)=>{
+
+    });
   }
 
 }

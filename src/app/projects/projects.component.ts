@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from './projects.service';
-
+//import { TreeComponent } from '../utils/tree/tree.component';
 
 @Component({
   selector: 'app-projects',
-  templateUrl: './projects.component.html',
+  template: `<div class="projects-p">
+  <app-tree [items]="projectsList"></app-tree>
+</div>`,
   styleUrls: ['./projects.component.scss'],
   providers: [ProjectsService]
 })
 export class ProjectsComponent implements OnInit {
 
-  projectsList: Array<Object>;
+  projectsList: Array<Object> = [];
 
   constructor(projects: ProjectsService) {
     projects.getProjectsList().subscribe(

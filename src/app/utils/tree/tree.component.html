@@ -1,0 +1,4 @@
+<ul class="tree" *ngFor="let item of items">
+  <li><span>{{item | tree}}</span></li>
+  <app-tree [items]="item.children"></app-tree>
+</ul>
