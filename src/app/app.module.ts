@@ -1,13 +1,21 @@
+// modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+// components
 import { AppComponent } from './app.component';
+
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectsPipe } from './projects/projects.pipe';
 import { TreeComponent } from './utils/tree/tree.component';
 import { TreePipe } from './utils/tree/tree.pipe';
+import { StatusMonitorComponent } from './status-monitor/status-monitor.component'
+
+// services
+import { WebSocketService } from './websockets/websocket.service'
+import { WeioMessage } from './websockets/weioMessage.service';
 
 @NgModule({
   declarations: [
@@ -15,14 +23,15 @@ import { TreePipe } from './utils/tree/tree.pipe';
     ProjectsComponent,
     ProjectsPipe,
     TreeComponent,
-    TreePipe
+    TreePipe,
+    StatusMonitorComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [WebSocketService, WeioMessage],
   bootstrap: [AppComponent],
   exports: [
     ProjectsPipe
