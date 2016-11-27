@@ -7,16 +7,18 @@ import { StatusMonitorService } from './status-monitor.service'
   styleUrls: ['./status-monitor.component.css'],
   providers: [StatusMonitorService]
 })
+
 export class StatusMonitorComponent implements OnInit {
-  status: string = "please wait";
-  
-  constructor(monitor: StatusMonitorService) { 
-    monitor.getIp();
-    monitor.getEnergyStatus();
-    monitor.getNetworkStatus();
+  //status: string = "please wait";
+
+  constructor(private monitor: StatusMonitorService) { 
   }
 
   ngOnInit() {
+  }
+
+  requestStatus() {
+    this.monitor.getStatus();
   }
 
 }

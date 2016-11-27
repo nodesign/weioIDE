@@ -8,8 +8,7 @@ export class WebSocketService {
 	public connect(url): Rx.Subject<MessageEvent> {
 		if (!this.subject) {
 			this.subject = this.create(url);
-			console.log("create");
-			
+			console.log("create");	
 		}
 		return this.subject;
 	}
@@ -31,6 +30,7 @@ export class WebSocketService {
 			next: (data: Object) => {
 				if (ws.readyState === WebSocket.OPEN) {
 					ws.send(JSON.stringify(data));
+					console.log(JSON.stringify(data));
 				}
 			}
 		}
