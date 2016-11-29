@@ -7,7 +7,7 @@ const WS_URL = 'ws://localhost:8000';
 export interface Message {
 	jsonrpc: string,
 	error: string,
-	result: string | number | {},
+	result: any,
 	id: string
 }
 
@@ -33,7 +33,7 @@ export class WeioMessage {
 	// helper function to make writing rpc messages simpler, 
 	// it only needs name of the method and it's parameters
 	// other RPC arguments will be automaticaly filled in here
-     getMsg(method:string, params:string | number | {}, id:string) {
+     getMsg(method:string, params:any, id:string) {
 	    var msgOut = {
 			"jsonrpc":"2.0",
 			"method": method,
