@@ -5,8 +5,7 @@ import { WebSocketRPC } from '../websockets/webSocketRPC.service'
 @Component({
   selector: 'app-status-monitor',
   templateUrl: './status-monitor.component.html',
-  styleUrls: ['./status-monitor.component.css'],
-  providers: [WebSocketRPC]
+  styleUrls: ['./status-monitor.component.css']
 })
 
 export class StatusMonitorComponent implements OnInit {
