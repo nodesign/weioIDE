@@ -14,8 +14,7 @@ import { TreePipe } from './utils/tree/tree.pipe';
 import { StatusMonitorComponent } from './status-monitor/status-monitor.component'
 
 // services
-import { WebSocketService } from './websockets/websocket.service'
-import { WeioMessage } from './websockets/weioMessage.service';
+import { WebSocketRPC } from './websockets/webSocketRPC.service'
 
 @NgModule({
   declarations: [
@@ -31,7 +30,7 @@ import { WeioMessage } from './websockets/weioMessage.service';
     FormsModule,
     HttpModule
   ],
-  providers: [WebSocketService, WeioMessage],
+  providers: [WebSocketRPC],
   bootstrap: [AppComponent],
   exports: [
     ProjectsPipe

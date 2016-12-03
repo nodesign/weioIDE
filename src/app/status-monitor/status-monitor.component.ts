@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { WeioMessage } from '../websockets/weioMessage.service'
+import { WebSocketRPC } from '../websockets/webSocketRPC.service'
+
 
 @Component({
   selector: 'app-status-monitor',
   templateUrl: './status-monitor.component.html',
   styleUrls: ['./status-monitor.component.css'],
-  providers: [WeioMessage]
+  providers: [WebSocketRPC]
 })
 
 export class StatusMonitorComponent implements OnInit {
@@ -17,24 +18,18 @@ export class StatusMonitorComponent implements OnInit {
 
   id:string = "monitorStatus";
 
-  constructor(private msg: WeioMessage) { 
-    	msg.messages.subscribe(msg => {			
-
-			if (msg.id == this.id) {
-				this.ip = msg.result.ip;
-				this.battery = msg.result.battery;
-				this.wifi = msg.result.wifi;
-//				console.log("hhhhh",msg.result);
-			}
-		});
-
-  }
+  constructor(private ws:WebSocketRPC) {}
 
   ngOnInit() {
+  
   }
 
   requestStatus() {
-    this.msg.messages.next(this.msg.getMsg("getStatus", "", this.id ));
+    this.ws.client.send('mirror', ['a param', 'another param'], function mirrorReply (error, reply) 
+    {
+        	console.log('mirror reply', reply);
+    });
+   // this.msg.messages.next(this.msg.getMsg("getStatus", "", this.id ));
   }
 
 }
