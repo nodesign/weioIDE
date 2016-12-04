@@ -31,4 +31,6 @@ export class StatusMonitorComponent implements OnInit {
    // this.msg.messages.next(this.msg.getMsg("getStatus", "", this.id ));
   }
 
+  
+
 }

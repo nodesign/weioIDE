@@ -14,12 +14,16 @@ export class ProjectsComponent implements OnInit {
 
   projectsList: Array<Object> = [];
 
-  constructor(projects: ProjectsService) {
-    projects.getProjectsList().subscribe(
-      data => { this.projectsList = JSON.parse(data._body); console.log(this.projectsList); },
+ constructor(projects: ProjectsService) {
+    projects.fileTree.subscribe(
+      data => {
+        console.log(data);
+        this.projectsList = JSON.parse(data); console.log(this.projectsList); 
+      },
       err => { console.log('error receiving projects', err); }
     );
   };
+  
 
   ngOnInit() {
   }
@@ -27,5 +31,6 @@ export class ProjectsComponent implements OnInit {
   itemSelected(item){
     console.log(item);
   }
+
 
 }
