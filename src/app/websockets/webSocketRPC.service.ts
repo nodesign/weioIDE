@@ -13,8 +13,8 @@ export class WebSocketRPC {
 	constructor() {
 		let c = this.connected;
 		this.client = RPC.createClient();
-		this.client.connect(WS_URL, function connected() {
-			c.next(true);
+		this.client.connect(WS_URL, ()=>{
+			this.connected.next(true);
 			console.log('connected to ' + WS_URL);
 		});
 	}

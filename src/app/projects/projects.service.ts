@@ -19,17 +19,17 @@ const projectsListUrl = "assets/tmp/projects.json";
 export class ProjectsService {
 
   constructor(private http: Http, private ws: WebSocketRPC) {
-    this.ws.connected.subscribe((o)=>{
-        console.log('change', o);
-        this.ws.client.send('getFileTree', ['../sandbox'], function mirrorReply(error, reply) {
-          console.log('mirror reply', reply);
-        });
+    this.ws.connected.subscribe((o) => {
+      console.log('change', o);
+      this.ws.client.send('getFileTree', ['../sandbox'], function mirrorReply(error, reply) {
+        console.log('mirror reply', reply);
+      });
     });
     /**/
   }
 
   getProjectsList(): Observable<any> {
-    
+
     return this.http.get(projectsListUrl);
   }
 
