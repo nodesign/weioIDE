@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WebSocketRPC } from '../websockets/webSocketRPC.service'
+import { WebSocketRPC } from '../websockets/webSocketRPC.service';
 
 
 @Component({

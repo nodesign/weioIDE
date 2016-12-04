@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { WebSocketRPC } from '../websockets/webSocketRPC.service';
 
 import 'rxjs/Rx';
 
@@ -17,9 +18,18 @@ const projectsListUrl = "assets/tmp/projects.json";
 @Injectable()
 export class ProjectsService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private ws: WebSocketRPC) {
+    this.ws.connected.subscribe((o)=>{
+        console.log('change', o);
+        this.ws.client.send('getFileTree', ['../sandbox'], function mirrorReply(error, reply) {
+          console.log('mirror reply', reply);
+        });
+    });
+    /**/
+  }
 
   getProjectsList(): Observable<any> {
+    
     return this.http.get(projectsListUrl);
   }
 
