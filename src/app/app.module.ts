@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AceEditorComponent } from 'ng2-ace-editor';
+import { ProjectsService } from './projects/projects.service';
 
 // components
 import { AppComponent } from './app.component';
@@ -35,7 +36,7 @@ import { EditorComponent } from './editor/editor.component';
     FormsModule,
     HttpModule
   ],
-  providers: [WebSocketRPC],
+  providers: [WebSocketRPC, ProjectsService],
   bootstrap: [AppComponent],
   exports: [
     ProjectsPipe

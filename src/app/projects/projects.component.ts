@@ -7,14 +7,14 @@ import { ProjectsService } from './projects.service';
   template: `<div class="projects-p">
   <app-tree [items]="projectsList" [path]="''" (notify)="itemSelected($event)"></app-tree>
 </div>`,
-  styleUrls: ['./projects.component.scss'],
-  providers: [ProjectsService]
+  styleUrls: ['./projects.component.scss']
+  //providers: [ProjectsService]
 })
 export class ProjectsComponent implements OnInit {
 
   projectsList: Array<Object> = [];
 
- constructor(projects: ProjectsService) {
+ constructor(private projects: ProjectsService) {
     projects.fileTree.subscribe(
       data => {
         console.log(data);
@@ -29,6 +29,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   itemSelected(item){
+    this.projects.selectFile(item);
     console.log(item);
   }
 

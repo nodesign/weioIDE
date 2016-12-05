@@ -22,7 +22,11 @@
       ],
       "scripts": [
        "../node_modules/ace-builds/src-min/ace.js",
-       "../node_modules/ace-builds/src-min/theme-xcode.js"
+       "../node_modules/ace-builds/src-min/theme-xcode.js",
+       "../node_modules/ace-builds/src-min/mode-javascript.js",
+       "../node_modules/ace-builds/src-min/mode-python.js",
+       "../node_modules/ace-builds/src-min/mode-json.js",
+       "../node_modules/ace-builds/src-min/mode-html.js"
       ],
       "environments": {
         "source": "environments/environment.ts",
