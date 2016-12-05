@@ -15,7 +15,7 @@ export class EditorComponent {
     text: string = "";
 
     ngAfterViewInit() {
-        this.editor.setTheme("eclipse");
+        this.editor.setTheme("xcode");
 
         this.editor.getEditor().setOptions({
             enableBasicAutocompletion: true
