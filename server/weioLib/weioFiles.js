@@ -23,7 +23,7 @@ exports.getFileTree = function(dir, done) {
                     exports.getFileTree(file, function(err, res) {
                         results.push({
                             label: path.basename(file),
-                            //type: 'folder',
+                            type: 'folder',
                             children: res
                         });
                         if (!--pending)
@@ -31,9 +31,13 @@ exports.getFileTree = function(dir, done) {
                     });
                 }
                 else {
-                    results.push(
-                        //type: 'file',
-                        path.basename(file)
+
+                    results.push({
+                        type: 'file',
+                        label: path.basename(file),
+                        language: getLanguageFromExtension(file)
+                    }
+                        
                     );
                     if (!--pending)
                         done(null, results);
@@ -43,13 +47,30 @@ exports.getFileTree = function(dir, done) {
     });
 }
 
-exports.getFile = function(path, done) {
-    fs.readFile(path, 'utf8', function (err,data) {
+exports.getFile = function(p, done) {
+    fs.readFile(p, 'utf8', function (err,d) {
       if (err) {
         return done(err, null);
       }
-      return done(null,data);
+      var f = {
+          label:path.basename(p),
+          language:getLanguageFromExtension(p),
+          data: d
+      }
+      return done(null,f);
     });
+}
+
+function getLanguageFromExtension(file) {
+    var re = /(?:\.([^.]+))?$/;
+    var ext = re.exec(file)[1];
+
+    var lang = "";
+    if (ext == "py") lang = "python";
+    if (ext == "json") lang = "json";
+    if (ext == "js") lang = "javascript";
+    if ((ext == "htm") || (ext == "html")) lang = "html";
+    return lang;
 }
 
 

@@ -24,9 +24,6 @@ export class EditorComponent {
         this.ed.currentFile.subscribe( file => {
             this.text = file.data;
             this.editor.setMode(file.language);
-            console.log("FILE TYPE",file.type);
-            //this.editor.getSession().setMode("ace/mode/javascript");
-            //console.log(this.editor.getSession);
         })
     }
 

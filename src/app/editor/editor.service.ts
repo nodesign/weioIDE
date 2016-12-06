@@ -13,20 +13,7 @@ export class EditorService {
 
     this.project.currentSelectedFile.subscribe( filename => {
         this.ws.client.send('getFile', [filename], (error, reply) => {
-          var re = /(?:\.([^.]+))?$/;
-          var ext = re.exec(filename)[1];
-          
-          var lang = "";
-          if (ext == "py") lang = "python";
-          if (ext == "json") lang = "json";
-          if (ext == "js") lang = "javascript";
-          if ((ext == "htm") || (ext == "html")) lang = "html";
-        
-          let f = { path:filename,
-                    type:ext,
-                    language:lang,
-                    data:JSON.parse(reply)
-                  }
+          let f = JSON.parse(reply);
           this.currentFile.next(f);
         
       }, this);
