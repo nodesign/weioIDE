@@ -1,0 +1,17 @@
+body {
+  background-color: #282828;
+  margin: 0px; }
+
+.dashboard {
+  height: 50px;
+  background-color: teal; }
+
+.leftColumn {
+  float: left;
+  width: 30%; }
+
+#weioLogo {
+  margin-left: 16px;
+  margin-top: 16px; }
+
+/*# sourceMappingURL=ide.css.map */

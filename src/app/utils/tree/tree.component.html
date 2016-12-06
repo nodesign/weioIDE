@@ -1,0 +1,4 @@
+<ul class="tree" *ngFor="let item of items">
+  <li (click)="selectMe(getPath(item))"><span>{{item | tree}}</span></li>
+  <app-tree [items]="item.children" [path]="getPath(item)" (notify)="selectMe($event)"></app-tree>
+</ul>
