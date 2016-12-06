@@ -48,24 +48,40 @@ exports.getFileTree = function(dir, done) {
 }
 
 exports.getFile = function(p, done) {
-    fs.readFile(p, 'utf8', function (err,d) {
-      if (err) {
+    if (getLanguageFromExtension(p) != null) {
+        fs.readFile(p, 'utf8', function (err,d) {
+        if (err) {
+            return done(err, null);
+        }
+        var f = {
+            label:path.basename(p),
+            language:getLanguageFromExtension(p),
+            data: d
+        }
+        return done(null,f);
+        });
+    } else {
         return done(err, null);
-      }
-      var f = {
-          label:path.basename(p),
-          language:getLanguageFromExtension(p),
-          data: d
-      }
-      return done(null,f);
-    });
+    }
 }
+
+exports.saveFile = function(p, data, done) {
+    
+    fs.writeFile(p, data, function(err) {
+    if(err) {
+        return done(err, null);
+    }
+    return done(null, "The file was saved!");
+
+    }); 
+}
+
 
 function getLanguageFromExtension(file) {
     var re = /(?:\.([^.]+))?$/;
     var ext = re.exec(file)[1];
 
-    var lang = "";
+    var lang = null;
     if (ext == "py") lang = "python";
     if (ext == "json") lang = "json";
     if (ext == "js") lang = "javascript";

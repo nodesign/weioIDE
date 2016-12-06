@@ -26,7 +26,23 @@ server.expose('getFile', function mirror (params, reply) {
     var filename = params[0];
     weioFiles.getFile(filename, function(err, res){
         if(err) {
-                reply(JSON.stringify("No such file"), null);
+                reply(err, null);
+                console.error(err);
+            } else {
+                reply(null, JSON.stringify(res));
+            }
+    });
+
+});
+
+server.expose('saveFile', function mirror (params, reply) {
+
+    var filename = params[0];
+    var data = params[1];
+
+    weioFiles.saveFile(filename, data, function(err, res){
+        if(err) {
+                reply(err, null);
                 console.error(err);
             } else {
                 reply(null, JSON.stringify(res));

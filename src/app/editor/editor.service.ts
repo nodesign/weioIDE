@@ -8,10 +8,12 @@ import { Observable, Subject, ReplaySubject } from 'rxjs/Rx';
 export class EditorService {
 
   public currentFile: ReplaySubject<any> = new ReplaySubject(1);
+  public filename:string;
 
   constructor(private project: ProjectsService, private ws: WebSocketRPC) { 
 
     this.project.currentSelectedFile.subscribe( filename => {
+        this.filename = filename;
         this.ws.client.send('getFile', [filename], (error, reply) => {
           let f = JSON.parse(reply);
           this.currentFile.next(f);
