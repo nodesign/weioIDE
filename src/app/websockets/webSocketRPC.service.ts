@@ -11,7 +11,6 @@ export class WebSocketRPC {
 	public connected: ReplaySubject<any> = new ReplaySubject(1);
 
 	constructor() {
-		let c = this.connected;
 		this.client = RPC.createClient();
 		this.client.connect(WS_URL, ()=>{
 			this.connected.next(true);
