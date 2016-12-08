@@ -24,9 +24,9 @@ export class StatusMonitorComponent implements OnInit {
   }
 
   requestStatus() {
-    this.ws.client.send('mirror', ['a param', 'another param'], function mirrorReply (error, reply) 
+    this.ws.client.send('getProjectsList', ['./projects'], (error, reply) => 
     {
-        	console.log('mirror reply', reply);
+        	console.log('reply', reply);
     });
    // this.msg.messages.next(this.msg.getMsg("getStatus", "", this.id ));
   }
