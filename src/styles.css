@@ -1,11 +1,23 @@
+div,p,aside,header,main,section,article{box-sizing: border-box; position: relative;}
+
 html{
     min-height: 100%;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
     font-size: 10px;
+    color: #878787;
 }
 
 body,app-root { padding:0; margin: 0; min-height: 100%;}
+
+header {
+    display: flex;
+    background-color: #282828;
+}
+
+header .logo{
+    margin: 18px 0 13px 16px;
+}
 
 main{
     display: flex;
@@ -18,7 +30,7 @@ main{
 main aside{
     width: 20%;
     padding: 20px;
-    background-color: rgba(0,0,0,.4);
+    background-color: #282828;
 }
 
 main aside ul{
@@ -34,6 +46,7 @@ main aside ul li{
     opacity:.8;
     transition: opacity 0.6s ease;
     font-size: 1.3rem;
+    color: #878787;
 } 
 main aside ul li:hover{
     opacity: 1;
@@ -53,7 +66,5 @@ main section p{
     display: flex;
 }
 app-status-monitor {
-  padding: 20px;
   display: flex; 
-  background-color: rgba(0,0,0,.7)
 }

@@ -19,19 +19,27 @@ let projectRoot = './sandbox';
 @Injectable()
 export class ProjectsService {
 
-  public fileTree: ReplaySubject<any> = new ReplaySubject(1);
+  public projectsTree: ReplaySubject<any> = new ReplaySubject(1);
+  public projectItemsTree: ReplaySubject<any> = new ReplaySubject(1);
   public currentSelectedFile: ReplaySubject<any> = new ReplaySubject(1);
 
   constructor(private ws: WebSocketRPC) {
 
       this.ws.connected.subscribe((o) => {
         this.getProjectsList();
+        this.ws.connected.unsubscribe();
       });
     }
 
     getProjectsList() {
       this.ws.client.send('getFileTree', [projectRoot], (error, reply) => {
-        this.fileTree.next(reply);
+        this.projectsTree.next(reply);
+      }, this);
+    }
+
+    getProjectItemsList(projectPath) {
+      this.ws.client.send('getFileTree', [projectRoot], (error, reply) => {
+        this.projectItemsTree.next(reply);
       }, this);
     }
 

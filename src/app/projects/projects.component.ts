@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from './projects.service';
-//import { TreeComponent } from '../utils/tree/tree.component';
 
 @Component({
   selector: 'app-projects',
@@ -8,27 +7,62 @@ import { ProjectsService } from './projects.service';
   <app-tree [items]="projectsList" [path]="''" (notify)="itemSelected($event)"></app-tree>
 </div>`,
   styleUrls: ['./projects.component.scss']
-  //providers: [ProjectsService]
 })
 export class ProjectsComponent implements OnInit {
 
   projectsList: Array<Object> = [];
+  projectItemsList: Array<Object> = [];
 
- constructor(private projects: ProjectsService) {
-    projects.fileTree.subscribe(
-      data => {
-        console.log(data);
-        this.projectsList = JSON.parse(data); console.log(this.projectsList); 
-      },
-      err => { console.log('error receiving projects', err); }
-    );
+  choosingProject: boolean = false;
+
+  constructor(private projects: ProjectsService) {
+
   };
-  
 
   ngOnInit() {
   }
 
-  itemSelected(item){
+  // We subscribe to any variable change, so we can update as soon as something has changed
+  subscribeToVars() {
+    this.subscribeToProjectsChange();
+    this.subscribeToProjectItemsChange();
+  }
+
+  // Subscribe to project change
+  subscribeToProjectsChange() {
+    this.projects.projectsTree.subscribe(
+      data => {
+        this.projectsList = JSON.parse(data);
+      },
+      err => { console.log('error receiving projects', err); }
+    );
+  }
+
+  // Subscribe to project item change
+  subscribeToProjectItemsChange() {
+    /*this.projects.fileTree.subscribe(
+      data => {
+        this.projectItemsList = JSON.parse(data);
+      },
+      err => { console.log('error receiving project items', err); }
+    );*/
+  }
+
+  /**
+   * Get list of projects
+   */
+  getProjects() {
+      
+  }
+
+  /**
+   * Get files from projects list
+   */
+  getProjectItems() {
+
+  }
+
+  itemSelected(item) {
     this.projects.selectFile(item);
     console.log(item);
   }
