@@ -1,6 +1,25 @@
 var fs = require('fs');
 var path = require('path');
 
+
+exports.getProjectsList = function(dir, done) {
+    var dirs = [];
+    var a = fs.readdir(dir, (err, files) => {
+        var i = 0;
+      files.forEach(file => {
+          
+          fs.stat(file, (err, stats) => {
+              i++;
+              //console.log(file + " " + stats.isDirectory());
+              if (stats.isDirectory()) dirs.push(file);
+              if (i == files.length) {
+                  done(null, dirs);
+              }
+          });
+      });
+    });
+}
+
 exports.getFileTree = function(dir, done) {
 
     var results = [];
