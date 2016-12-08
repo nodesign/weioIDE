@@ -1,0 +1,26 @@
+[
+    {
+        "children": [
+            {
+                "children": [
+                    "getTree.py", 
+                    "treeExample.json"
+                ], 
+                "label": "fileTreeExample"
+            }, 
+            "ide.css", 
+            "ide.css.map", 
+            "ide.scss", 
+            {
+                "children": [
+                    "logo.png", 
+                    "playStop.png"
+                ], 
+                "label": "img"
+            }, 
+            "index.html", 
+            "ng-book2-r40.pdf"
+        ],
+        "label": "sandbox"
+    }
+]
