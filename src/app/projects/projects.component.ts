@@ -4,7 +4,8 @@ import { ProjectsService } from './projects.service';
 @Component({
   selector: 'app-projects',
   template: `<div class="projects-p">
-  <app-tree [items]="projectsList" [path]="''" (notify)="itemSelected($event)"></app-tree>
+  <app-tree [items]="projectsList" [path]="''" (notify)="projectItemSelected($event)"></app-tree>
+  <app-tree [items]="projectsItemsList" [path]="''" (notify)="projectFileItemSelected($event)"></app-tree>  
 </div>`,
   styleUrls: ['./projects.component.scss']
 })
@@ -16,7 +17,7 @@ export class ProjectsComponent implements OnInit {
   choosingProject: boolean = false;
 
   constructor(private projects: ProjectsService) {
-
+    this.subscribeToVars();
   };
 
   ngOnInit() {
@@ -38,32 +39,25 @@ export class ProjectsComponent implements OnInit {
     );
   }
 
-  // Subscribe to project item change
+  // Subscribe to files item change
   subscribeToProjectItemsChange() {
-    /*this.projects.fileTree.subscribe(
+    this.projects.projectItemsTree.subscribe(
       data => {
         this.projectItemsList = JSON.parse(data);
+        console.log("GOT FILE LIST");
       },
       err => { console.log('error receiving project items', err); }
-    );*/
+    );
   }
 
-  /**
-   * Get list of projects
-   */
-  getProjects() {
-      
+  projectItemSelected(item) {
+    console.log("PROJECT SELECTED ", item);
+    this.projects.getProjectItemsList(item);
+    
   }
 
-  /**
-   * Get files from projects list
-   */
-  getProjectItems() {
-
-  }
-
-  itemSelected(item) {
-    this.projects.selectFile(item);
+ projectFileItemSelected(item) {
+    //this.projects.selectFile(item);
     console.log(item);
   }
 

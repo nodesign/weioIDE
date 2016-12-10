@@ -24,21 +24,23 @@ export class ProjectsService {
   public currentSelectedFile: ReplaySubject<any> = new ReplaySubject(1);
 
   constructor(private ws: WebSocketRPC) {
-
       this.ws.connected.subscribe((o) => {
         this.getProjectsList();
         this.ws.connected.unsubscribe();
       });
     }
 
-    getProjectsList() {
-      this.ws.client.send('getFileTree', [projectRoot], (error, reply) => {
+    getProjectsList() {  
+      this.ws.client.send('getProjectsList', ['./projects'], (error, reply) => {
+        console.log("LISTA PROJEKATA"+ reply);
         this.projectsTree.next(reply);
       }, this);
     }
 
     getProjectItemsList(projectPath) {
-      this.ws.client.send('getFileTree', [projectRoot], (error, reply) => {
+      console.log("ASKING FOR", './projects'+projectPath);
+      this.ws.client.send('getFileTree', ['./projects'+projectPath], (error, reply) => {
+        console.log("LISTA UNUTRA PROJEKTA"+ reply);
         this.projectItemsTree.next(reply);
       }, this);
     }
