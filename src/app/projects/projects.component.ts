@@ -3,10 +3,7 @@ import { ProjectsService } from './projects.service';
 
 @Component({
   selector: 'app-projects',
-  template: `<div class="projects-p">
-  <app-tree [items]="projectsList" [path]="''" (notify)="projectItemSelected($event)"></app-tree>
-  <app-tree [items]="projectsItemsList" [path]="''" (notify)="projectFileItemSelected($event)"></app-tree>  
-</div>`,
+  templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
@@ -15,6 +12,7 @@ export class ProjectsComponent implements OnInit {
   projectItemsList: Array<Object> = [];
 
   choosingProject: boolean = false;
+
 
   constructor(private projects: ProjectsService) {
     this.subscribeToVars();
@@ -29,35 +27,42 @@ export class ProjectsComponent implements OnInit {
     this.subscribeToProjectItemsChange();
   }
 
-  // Subscribe to project change
+  // GET PROJECTS
   subscribeToProjectsChange() {
     this.projects.projectsTree.subscribe(
       data => {
         this.projectsList = JSON.parse(data);
+        console.log("PROJECTS", this.projectsList);
+        
+
       },
       err => { console.log('error receiving projects', err); }
     );
   }
-
-  // Subscribe to files item change
-  subscribeToProjectItemsChange() {
-    this.projects.projectItemsTree.subscribe(
-      data => {
-        this.projectItemsList = JSON.parse(data);
-        console.log("GOT FILE LIST");
-      },
-      err => { console.log('error receiving project items', err); }
-    );
-  }
-
+  
+  // PROJECT SELECTION
   projectItemSelected(item) {
     console.log("PROJECT SELECTED ", item);
     this.projects.getProjectItemsList(item);
     
   }
 
+
+  // GET PROJECT FILES
+  subscribeToProjectItemsChange() {
+    this.projects.projectItemsTree.subscribe(
+      data => {
+        var out = [];
+        this.projectItemsList = JSON.parse(data);
+        console.log("GOT FILE LIST", this.projectItemsList);
+      },
+      err => { console.log('error receiving project items', err); }
+    );
+  }
+
+ // INSIDE PROJECT SELECTION
  projectFileItemSelected(item) {
-    //this.projects.selectFile(item);
+    this.projects.selectFile(item);
     console.log(item);
   }
 

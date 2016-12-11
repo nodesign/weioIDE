@@ -1,4 +1,4 @@
 <div class="projects-p">
-  <app-tree [items]="projectsList"></app-tree>
-  <app-tree [items]="projectItemsList"></app-tree>
+  <app-tree [items]="projectsList" [path]="''" (notify)="projectItemSelected($event)"></app-tree>
+  <app-tree [items]="projectItemsList" [path]="''" (notify)="projectFileItemSelected($event)"></app-tree>  
 </div>
