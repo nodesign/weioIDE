@@ -18,6 +18,8 @@ import { StatusMonitorComponent } from './status-monitor/status-monitor.componen
 // services
 import { WebSocketRPC } from './websockets/webSocketRPC.service';
 import { EditorComponent } from './editor/editor.component';
+import { PlayerComponent } from './player/player.component';
+import { OutputConsoleComponent } from './output-console/output-console.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { EditorComponent } from './editor/editor.component';
     TreePipe,
     StatusMonitorComponent,
     EditorComponent,
-    AceEditorComponent
+    AceEditorComponent,
+    PlayerComponent,
+    OutputConsoleComponent
   ],
   imports: [
     BrowserModule,

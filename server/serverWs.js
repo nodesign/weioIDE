@@ -1,9 +1,10 @@
 var JsonRpcWs = require('json-rpc-ws');
 var weioFiles = require('./weioLib/weioFiles.js')
+var weioSpawn = require('./weioLib/weioSpawn.js')
+
 var server = JsonRpcWs.createServer();
 
 server.expose('mirror', (params, reply) => {
-
     console.log('mirror handler', params);
     reply(null, params);
 });
@@ -63,6 +64,38 @@ server.expose('saveFile', (params, reply) =>  {
     });
 
 });
+
+
+server.expose('play', (params, reply) => {
+    console.log(params);
+    reply(null, params);
+    console.log("SENDING");
+    server.send('dddd', ["HJKKLHLJKJKLHKLHJK"], (error, reply) => {
+        console.log('mirror reply', reply);
+        //console.log(error);
+    });
+});
+
+/*
+    weioSpawn.spawnProcess(params, function(err, res){
+        if(err) {
+                reply(err, null);
+                console.error(err);
+            } else {
+                //reply(null, JSON.stringify(res));
+                console.log("OUT",res);
+                
+            }
+    });
+*/
+//
+// weioFiles.getProjectsList("./projects", function(err, res){
+//     if(err)
+//         console.error(err);
+//
+//     console.log(JSON.stringify(res, null, 2));
+// });
+
 
 server.start({ port: 8080 }, function started () {
     console.log('Server started on port 8080');

@@ -1,13 +1,16 @@
 var fs = require('fs');
 var path = require('path');
 
-
 exports.getProjectsList = function(dir, done) {
     var dirs = [];
     var a = fs.readdir(dir, (err, files) => {
         var i = 0;
+        console.log("FILES",files);
+        // ignore hidden files
+        files = files.filter(item => !(/(^|\/)\.[^\/\.]/g).test(item));
+        console.log("FILES",files);
+/*
       files.forEach(file => {
-          
           fs.stat(file, (err, stats) => {
               i++;
               //console.log(file + " " + stats.isDirectory());
@@ -17,6 +20,9 @@ exports.getProjectsList = function(dir, done) {
               }
           });
       });
+*/
+        
+        done(null, files);
     });
 }
 
