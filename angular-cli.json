@@ -28,7 +28,8 @@
        "../node_modules/ace-builds/src-min/mode-python.js",
        "../node_modules/ace-builds/src-min/mode-json.js",
        "../node_modules/ace-builds/src-min/mode-html.js",
-       "../node_modules/ace-builds/src-min/mode-css.js"
+       "../node_modules/ace-builds/src-min/mode-css.js",
+       "../node_modules/ace-builds/src-min/mode-toml.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

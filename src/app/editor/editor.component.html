@@ -1,6 +1,6 @@
-<div class="editorTitle">{{filename}}</div>
+<div class="editorTitle" (click)="touchedFilename($event)" >{{filename}}</div>
 
 <p>
 <ace-editor
-     [text] = "text" #editor style="min-height:200px;"></ace-editor>
+     (keyup) = "onKey($event)" [text] = "text" #editor style="min-height:200px;"></ace-editor>
 </p>

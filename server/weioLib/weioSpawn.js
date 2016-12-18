@@ -11,12 +11,12 @@ exports.spawnProcess = function(params, done) {
 
     proc.stdout.on('data', function (data) {
       console.log('stdout: ' + data.toString());
-      done(null, {"stdout":data.toString());
+      done(null, {"stdout":data.toString()});
     });
 
     proc.stderr.on('data', function (data) {
       console.log('stderr: ' + data.toString());
-      done(null, "stderr":data.toString());
+      done(null, {"stderr":data.toString()});
     });
 
     proc.on('exit', function (code) {

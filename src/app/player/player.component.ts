@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketRPC } from '../websockets/webSocketRPC.service';
 
+
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
-  styleUrls: ['./player.component.css']
+  styleUrls: ['./player.component.css'],
 })
 export class PlayerComponent implements OnInit {
 
@@ -19,9 +20,9 @@ export class PlayerComponent implements OnInit {
   }
 
   play() {
-    
+    console.log("will play now");
      this.ws.client.send('play', [null], (error, reply) => {
-        console.log(reply);
+        console.log("PLAY ANSWERED",reply);
       }, this);
   }
 
