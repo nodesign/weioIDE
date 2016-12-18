@@ -4,7 +4,6 @@
     <option>Select project</option>
     <option *ngFor="let project of projectsList;">{{project}}</option>
   </select>
-    
-  <!--<app-tree [items]="projectsList" [path]="''" (notify)="projectItemSelected($event)"></app-tree>-->
+
   <app-tree [items]="projectItemsList" [path]="''" (notify)="projectFileItemSelected($event)"></app-tree>  
 </div>

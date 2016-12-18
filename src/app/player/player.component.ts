@@ -20,14 +20,14 @@ export class PlayerComponent implements OnInit {
 
   play() {
     
-     this.ws.client.send('play', ["python", "-u", "./sandbox/counter.py"], (error, reply) => {
+     this.ws.client.send('play', [null], (error, reply) => {
         console.log(reply);
       }, this);
   }
 
   stop() {
-     this.ws.client.send('stop', [], (error, reply) => {
-        
+     this.ws.client.send('stop', [null], (error, reply) => {
+        console.log(reply);
       }, this);
   }
 

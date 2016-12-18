@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WebSocketRPC } from '../websockets/webSocketRPC.service';
 
 @Component({
   selector: 'app-output-console',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OutputConsoleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private ws: WebSocketRPC) { 
+    ws.client.expose("pushToConsole", (params, reply) => {
+      console.log(params);
+    });
+  }
 
   ngOnInit() {
   }

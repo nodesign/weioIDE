@@ -21,17 +21,13 @@ try {
 
 // END SYNC OPERATIONS. ONLY ASYNC FROM NOW ON
 
+var currentProjectPath = "";
 var server = JsonRpcWs.createServer();
 
-server.expose('mirror', (params, reply) => {
-    console.log('mirror handler', params);
-    reply(null, params);
-});
-
-server.expose('getProjectsList', (params, reply) => {
+server.expose('getProjectsList', function getProjectsList(params, reply) {
 
     var path = config.projects.rootDirectory;
-    weioFiles.getProjectsList(path, function(err, res){
+    weioFiles.getProjectsList(path, (err, res) => {
         if(err)
             console.error(err);
         //console.log('mirror handler', params);
@@ -41,10 +37,11 @@ server.expose('getProjectsList', (params, reply) => {
 
 });
 
-server.expose('getFileTree', (params, reply) => {
+server.expose('getFileTree', function  getFileTree(params, reply) {
 
     var dirTree = config.projects.rootDirectory+params[0];
-    weioFiles.getFileTree(dirTree, function(err, res){
+    currentProjectPath = dirTree;
+    weioFiles.getFileTree(dirTree, (err, res) => {
         if(err)
             console.error(err);
         //console.log('mirror handler', params);
@@ -54,10 +51,10 @@ server.expose('getFileTree', (params, reply) => {
 
 });
 
-server.expose('inspectFile', (params, reply) => {
+server.expose('inspectFile', function inspectFile(params, reply) {
 
     var filename = config.projects.rootDirectory + params[0];
-    weioFiles.inspectFile(filename, function(err, res){
+    weioFiles.inspectFile(filename, (err, res) => {
         if(err) {
                 reply(err, null);
                 console.error(err);
@@ -69,10 +66,10 @@ server.expose('inspectFile', (params, reply) => {
 
 });
 
-server.expose('getFile', (params, reply) => {
+server.expose('getFile', function getFile (params, reply) {
 
     var filename = config.projects.rootDirectory+params[0];
-    weioFiles.getFile(filename, function(err, res){
+    weioFiles.getFile(filename, (err, res) => {
         if(err) {
                 reply(err, null);
                 console.error(err);
@@ -83,12 +80,12 @@ server.expose('getFile', (params, reply) => {
 
 });
 
-server.expose('saveFile', (params, reply) =>  {
+server.expose('saveFile', function saveFile (params, reply) {
 
     var filename = config.projects.rootDirectory + params[0];
     var data = params[1];
 
-    weioFiles.saveFile(filename, data, function(err, res){
+    weioFiles.saveFile(filename, data, (err, res) => {
         if(err) {
                 reply(err, null);
                 console.error(err);
@@ -99,14 +96,39 @@ server.expose('saveFile', (params, reply) =>  {
 
 });
 
-server.expose('play', (params, reply) => {
-    console.log(params);
-    reply(null, params);
-    console.log("SENDING");
-    server.send('dddd', ["HJKKLHLJKJKLHKLHJK"], (error, reply) => {
-        console.log('mirror reply', reply);
-        //console.log(error);
+server.expose('play', function play (params, reply) {
+
+    // if something is still alive than kick it hard with SIGKILL
+    //weioSpawn.exterminateProcess();
+    console.log("PLAY NOW", currentProjectPath+"/projectConfig.toml");
+    
+    weioFiles.getFile(currentProjectPath+"/projectConfig.toml", (err, res) => {
+        try {
+            spawnParams = toml.parse(res.data);
+            console.log("WILL SPAWN", spawnParams.play.starter);
+            weioSpawn.spawnProcess(spawnParams.play.starter, (err, res) => {
+                if (err) {
+                    reply(err, null);
+                } else {
+                    //reply(null, JSON.stringify(res));
+                    reply(null, JSON.stringify("Child process started"));
+                    server.send(this.id, "pushToConsole", [res], (e, r) => {
+                        console.log(r);
+                    });
+                    console.log(res);
+                }
+            });
+        } catch (e){
+            reply("Parsing projectConfig.toml, error on line " + e.line + ", column " + e.column +
+            ": " + e.message);
+        }
     });
+});
+
+
+server.expose('stop', function stop (params, reply) {
+    weioSpawn.killProcess();
+    reply(null, JSON.stringify("SIGKILL has been sent"));
 });
 
 // SERVER START
