@@ -44,6 +44,7 @@ export class ProjectsService {
         var inspected = JSON.parse(reply);
         console.log("INSPECTIOOON",inspected);
         if ((inspected.type=="file") && (inspected.supportedType==true)) this.currentSelectedFile.next(this.currentProjectPath+filename);
+  
         if (inspected.type=="folder") console.log("I'm folder man!");
 
       }, this);
