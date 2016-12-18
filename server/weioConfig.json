@@ -1,0 +1,10 @@
+{
+    "projects": {
+        "rootDirectory": "./projects",
+        "lastOpenedProject": "./projects/runner"
+    },
+    "server": {
+        "webSocketServerPort": 8080,
+        "httpServerPort": 4200
+    }
+}

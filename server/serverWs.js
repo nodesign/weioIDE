@@ -1,5 +1,4 @@
 var fs = require('fs');
-var toml = require('toml');
 var JsonRpcWs = require('json-rpc-ws');
 var weioFiles = require('./weioLib/weioFiles.js');
 var weioSpawn = require('./weioLib/weioSpawn.js');
@@ -9,19 +8,17 @@ var weioSpawn = require('./weioLib/weioSpawn.js');
 // get configuration that will serve some functions here
 // don't do this in async way as it's important that all functions
 // get these config at start
-var config = fs.readFileSync("./server/weioConfig.toml", 'utf8');
+var config = fs.readFileSync("./server/weioConfig.json", 'utf8');
 
 try {
-    config = toml.parse(config);
+    config = JSON.parse(config);
 } catch (e){
-    console.error("Parsing error on line " + e.line + ", column " + e.column +
-    ": " + e.message);
+    console.error(e);
     process.exit();
 }
 
 // END SYNC OPERATIONS. ONLY ASYNC FROM NOW ON
 
-var currentProjectPath = "";
 var server = JsonRpcWs.createServer();
 
 server.expose('getProjectsList', function getProjectsList(params, reply) {
@@ -39,8 +36,12 @@ server.expose('getProjectsList', function getProjectsList(params, reply) {
 
 server.expose('getFileTree', function  getFileTree(params, reply) {
 
+
     var dirTree = config.projects.rootDirectory+params[0];
-    currentProjectPath = dirTree;
+
+    config.projects.lastOpenedProject = dirTree;
+    fs.writeFile("./server/weioConfig.json", JSON.stringify(config, null, 4));
+
     weioFiles.getFileTree(dirTree, (err, res) => {
         if(err)
             console.error(err);
@@ -100,9 +101,9 @@ server.expose('play', function play (params, reply) {
 
     // if something is still alive than kick it hard with SIGKILL
     //weioSpawn.exterminateProcess();
-    console.log("PLAY NOW", currentProjectPath+"/projectConfig.toml");
+    console.log("PLAY NOW", config.projects.lastOpenedProject+"/projectConfig.toml");
     
-    weioFiles.getFile(currentProjectPath+"/projectConfig.toml", (err, res) => {
+    weioFiles.getFile(config.projects.lastOpenedProject+"/projectConfig.toml", (err, res) => {
         try {
             spawnParams = toml.parse(res.data);
             console.log("WILL SPAWN", spawnParams.play.starter);
