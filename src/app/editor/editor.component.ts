@@ -12,14 +12,14 @@ import { Observable, Subject, ReplaySubject } from 'rxjs/Rx';
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.css'],
+  styleUrls: ['./editor.component.scss'],
   providers: [EditorService]
 })
 export class EditorComponent {
     @ViewChild('editor') editor;
     // use getter and setter functions to set content
     text: string = "";
-    filename: string = "";
+    filename: string = "unsaved";
 
 
     constructor(private ed:EditorService) {
@@ -29,6 +29,7 @@ export class EditorComponent {
             this.ed.saveFile(this.ed.p_filename, this.editor.getEditor().getValue());
             
             // this is a good way to update content of ace editor
+            this.filename = file.label;
             this.editor.getEditor().setValue(file.data);
             this.editor.setMode(file.language);
         })
@@ -49,7 +50,7 @@ export class EditorComponent {
             name: "showOtherCompletions",
             bindKey: "Ctrl-.",
             exec: function (editor) {
-
+                
             }
         })
     }
