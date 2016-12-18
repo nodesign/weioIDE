@@ -26,7 +26,8 @@ export class EditorComponent {
         this.ed.currentFile.subscribe( file => {
             // save current file before replace it
             console.log("save to",this.ed.p_filename);
-            this.ed.saveFile(this.ed.p_filename, this.editor.getEditor().getValue());
+            if (this.ed.p_filename != null)
+                this.ed.saveFile(this.ed.p_filename, this.editor.getEditor().getValue());
             
             // this is a good way to update content of ace editor
             this.filename = file.label;
