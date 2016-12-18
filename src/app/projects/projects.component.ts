@@ -34,7 +34,6 @@ export class ProjectsComponent implements OnInit {
         this.projectsList = JSON.parse(data);
         console.log("PROJECTS", this.projectsList);
         
-
       },
       err => { console.log('error receiving projects', err); }
     );
@@ -43,7 +42,8 @@ export class ProjectsComponent implements OnInit {
   // PROJECT SELECTION
   projectItemSelected(item) {
     console.log("PROJECT SELECTED ", item);
-    this.projects.getProjectItemsList(item);
+    if (item != "Select project")
+      this.projects.getProjectItemsList("/"+item);
     
   }
 
@@ -65,6 +65,7 @@ export class ProjectsComponent implements OnInit {
     this.projects.selectFile(item);
     console.log(item);
   }
+
 
 
 }
