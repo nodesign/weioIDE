@@ -7,6 +7,8 @@ var weioSpawn = require('./weioLib/weioSpawn.js');
 // SYNC OPERATIONS HERE BEFORE SERVER START
 
 // get configuration that will serve some functions here
+// don't do this in async way as it's important that all functions
+// get these config at start
 var config = fs.readFileSync("./server/weioConfig.toml", 'utf8');
 
 try {
@@ -48,6 +50,21 @@ server.expose('getFileTree', (params, reply) => {
         //console.log('mirror handler', params);
         console.log(JSON.stringify(res, null, 2));
         reply(null, JSON.stringify(res));
+    });
+
+});
+
+server.expose('inspectFile', (params, reply) => {
+
+    var filename = config.projects.rootDirectory + params[0];
+    weioFiles.inspectFile(filename, function(err, res){
+        if(err) {
+                reply(err, null);
+                console.error(err);
+            } else {
+                console.log("INSPECTED", res);
+                reply(null, JSON.stringify(res));
+            }
     });
 
 });

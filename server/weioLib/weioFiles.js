@@ -72,6 +72,25 @@ exports.getFileTree = function(dir, done) {
     });
 }
 
+exports.inspectFile = function(p, done) {
+    data = {};
+    fs.lstat(p, (err,d) => {
+        if (err) {
+            done(err, null); 
+        } else {
+            if (d.isDirectory()) {
+                data.type = "folder";
+            } else if (d.isFile()){
+                data.type = "file";
+                if (getLanguageFromExtension(p)) data.supportedType = true;
+                    else data.supportedType = false;
+            }
+            data.size = d.size;
+            done(null, data);
+        }
+    });
+}
+
 exports.getFile = function(p, done) {
     if (getLanguageFromExtension(p) != null) {
         fs.readFile(p, 'utf8', function (err,d) {

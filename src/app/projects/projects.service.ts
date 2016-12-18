@@ -38,6 +38,16 @@ export class ProjectsService {
 
     selectFile(filename) {
       console.log("selected file", filename);
-      this.currentSelectedFile.next(this.currentProjectPath+filename);
+
+      this.ws.client.send('inspectFile', [this.currentProjectPath+filename], (error, reply) => {
+       
+        var inspected = JSON.parse(reply);
+        console.log("INSPECTIOOON",inspected);
+        if ((inspected.type=="file") && (inspected.supportedType==true)) this.currentSelectedFile.next(this.currentProjectPath+filename);
+        if (inspected.type=="folder") console.log("I'm folder man!");
+
+      }, this);
+
+
     }
 }
