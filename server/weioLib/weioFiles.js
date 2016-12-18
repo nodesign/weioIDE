@@ -86,12 +86,12 @@ exports.getFile = function(p, done) {
         return done(null,f);
         });
     } else {
-        return done(err, null);
+        return done("File extension not supported", null);
     }
 }
 
 exports.saveFile = function(p, data, done) {
-    
+    console.log(data);
     fs.writeFile(p, data, function(err) {
     if(err) {
         return done(err, null);
@@ -111,6 +111,7 @@ function getLanguageFromExtension(file) {
     if (ext == "json") lang = "json";
     if (ext == "js") lang = "javascript";
     if ((ext == "htm") || (ext == "html")) lang = "html";
+    if (ext == "toml") lang = "toml";
     return lang;
 }
 

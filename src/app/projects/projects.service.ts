@@ -4,17 +4,6 @@ import { WebSocketRPC } from '../websockets/webSocketRPC.service';
 
 import 'rxjs/Rx';
 
-/**
- * 
- */
-const projectDescriptionUrl = ".project.json";
-
-/**
- * @todo Change path with real server path
- */
-const projectsListUrl = "assets/tmp/projects.json";
-
-let projectRoot = './sandbox';
 
 @Injectable()
 export class ProjectsService {
@@ -22,6 +11,7 @@ export class ProjectsService {
   public projectsTree: ReplaySubject<any> = new ReplaySubject(1);
   public projectItemsTree: ReplaySubject<any> = new ReplaySubject(1);
   public currentSelectedFile: ReplaySubject<any> = new ReplaySubject(1);
+  public currentProjectPath: string = "";
 
   constructor(private ws: WebSocketRPC) {
       this.ws.connected.subscribe((o) => {
@@ -31,21 +21,23 @@ export class ProjectsService {
     }
 
     getProjectsList() {  
-      this.ws.client.send('getProjectsList', ['./projects'], (error, reply) => {
+      this.ws.client.send('getProjectsList', [null], (error, reply) => {
         console.log("LISTA PROJEKATA"+ reply);
         this.projectsTree.next(reply);
       }, this);
     }
 
     getProjectItemsList(projectPath) {
-      console.log("ASKING FOR", './projects'+projectPath);
-      this.ws.client.send('getFileTree', ['./projects'+projectPath], (error, reply) => {
+      this.currentProjectPath = projectPath;
+      console.log("ASKING FOR", this.currentProjectPath);
+      this.ws.client.send('getFileTree', [this.currentProjectPath], (error, reply) => {
         console.log("LISTA UNUTRA PROJEKTA"+ reply);
         this.projectItemsTree.next(reply);
       }, this);
     }
 
     selectFile(filename) {
-      this.currentSelectedFile.next(projectRoot+filename);
+      console.log("selected file", filename);
+      this.currentSelectedFile.next(this.currentProjectPath+filename);
     }
 }

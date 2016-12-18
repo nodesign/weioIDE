@@ -1,0 +1,12 @@
+# This is a TOML document
+
+title = "WeIO IDE Configuration File"
+
+[projects]
+rootDirectory = "./projects"
+lastOpenedProject = ""
+
+[server]
+webSocketServerPort = 8080
+# todo make https server in node and bind it to this port
+httpServerPort = 4200

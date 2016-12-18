@@ -8,13 +8,21 @@ import { Observable, Subject, ReplaySubject } from 'rxjs/Rx';
 export class EditorService {
 
   public currentFile: ReplaySubject<any> = new ReplaySubject(1);
-  public filename:string;
+  // current filename
+  
+  public filename:string = null;
+  // precedent filename t-1
+  public p_filename:string = null;
 
   constructor(private project: ProjectsService, private ws: WebSocketRPC) { 
 
-    this.project.currentSelectedFile.subscribe( filename => {
-        this.filename = filename;
-        this.ws.client.send('getFile', [filename], (error, reply) => {
+    this.project.currentSelectedFile.subscribe( filenameA => {
+        
+        this.ws.client.send('getFile', [filenameA], (error, reply) => {
+          // change something if you get the answer
+          this.p_filename = this.filename;
+          this.filename = filenameA;
+ 
           let f = JSON.parse(reply);
           this.currentFile.next(f);
         
@@ -22,6 +30,16 @@ export class EditorService {
 
       });
       
+  }
+
+  saveFile(file:string, data:string ) {
+    
+      this.ws.client.send('saveFile', [file, data], (error, reply) => {
+          console.log(reply);
+      }, this);
+
+     
+
   }
 
 }

@@ -1,6 +1,23 @@
+var fs = require('fs');
+var toml = require('toml');
 var JsonRpcWs = require('json-rpc-ws');
-var weioFiles = require('./weioLib/weioFiles.js')
-var weioSpawn = require('./weioLib/weioSpawn.js')
+var weioFiles = require('./weioLib/weioFiles.js');
+var weioSpawn = require('./weioLib/weioSpawn.js');
+
+// SYNC OPERATIONS HERE BEFORE SERVER START
+
+// get configuration that will serve some functions here
+var config = fs.readFileSync("./server/weioConfig.toml", 'utf8');
+
+try {
+    config = toml.parse(config);
+} catch (e){
+    console.error("Parsing error on line " + e.line + ", column " + e.column +
+    ": " + e.message);
+    process.exit();
+}
+
+// END SYNC OPERATIONS. ONLY ASYNC FROM NOW ON
 
 var server = JsonRpcWs.createServer();
 
@@ -11,7 +28,7 @@ server.expose('mirror', (params, reply) => {
 
 server.expose('getProjectsList', (params, reply) => {
 
-    var path = params[0];
+    var path = config.projects.rootDirectory;
     weioFiles.getProjectsList(path, function(err, res){
         if(err)
             console.error(err);
@@ -24,7 +41,7 @@ server.expose('getProjectsList', (params, reply) => {
 
 server.expose('getFileTree', (params, reply) => {
 
-    var dirTree = params[0];
+    var dirTree = config.projects.rootDirectory+params[0];
     weioFiles.getFileTree(dirTree, function(err, res){
         if(err)
             console.error(err);
@@ -37,7 +54,7 @@ server.expose('getFileTree', (params, reply) => {
 
 server.expose('getFile', (params, reply) => {
 
-    var filename = params[0];
+    var filename = config.projects.rootDirectory+params[0];
     weioFiles.getFile(filename, function(err, res){
         if(err) {
                 reply(err, null);
@@ -51,7 +68,7 @@ server.expose('getFile', (params, reply) => {
 
 server.expose('saveFile', (params, reply) =>  {
 
-    var filename = params[0];
+    var filename = config.projects.rootDirectory + params[0];
     var data = params[1];
 
     weioFiles.saveFile(filename, data, function(err, res){
@@ -65,7 +82,6 @@ server.expose('saveFile', (params, reply) =>  {
 
 });
 
-
 server.expose('play', (params, reply) => {
     console.log(params);
     reply(null, params);
@@ -76,27 +92,7 @@ server.expose('play', (params, reply) => {
     });
 });
 
-/*
-    weioSpawn.spawnProcess(params, function(err, res){
-        if(err) {
-                reply(err, null);
-                console.error(err);
-            } else {
-                //reply(null, JSON.stringify(res));
-                console.log("OUT",res);
-                
-            }
-    });
-*/
-//
-// weioFiles.getProjectsList("./projects", function(err, res){
-//     if(err)
-//         console.error(err);
-//
-//     console.log(JSON.stringify(res, null, 2));
-// });
-
-
-server.start({ port: 8080 }, function started () {
-    console.log('Server started on port 8080');
+// SERVER START
+server.start({ port: config.server.webSocketServerPort }, function started () {
+    console.log('Websocket server started on port ' + config.server.webSocketServerPort);
 });
