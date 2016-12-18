@@ -1,4 +1,5 @@
 var fs = require('fs');
+var toml = require('toml');
 var JsonRpcWs = require('json-rpc-ws');
 var weioFiles = require('./weioLib/weioFiles.js');
 var weioSpawn = require('./weioLib/weioSpawn.js');
