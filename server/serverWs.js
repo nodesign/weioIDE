@@ -3,6 +3,7 @@ var toml = require('toml');
 var JsonRpcWs = require('json-rpc-ws');
 var weioFiles = require('./weioLib/weioFiles.js');
 var weioSpawn = require('./weioLib/weioSpawn.js');
+var spawnParams = "";
 
 // SYNC OPERATIONS HERE BEFORE SERVER START
 
@@ -11,6 +12,7 @@ var weioSpawn = require('./weioLib/weioSpawn.js');
 // get these config at start
 var config = fs.readFileSync("./server/weioConfig.json", 'utf8');
 
+
 try {
     config = JSON.parse(config);
 } catch (e){
@@ -18,7 +20,18 @@ try {
     process.exit();
 }
 
+var userConf = fs.readFileSync(config.projects.lastOpenedProject+"/projectConfig.toml", 'utf8');
+
+try {
+    spawnParams = toml.parse(userConf);
+} catch (e){
+    config.log("Parsing projectConfig.toml, error on line " + e.line + ", column " + e.column +
+    ": " + e.message);
+}
+
 // END SYNC OPERATIONS. ONLY ASYNC FROM NOW ON
+
+
 
 var server = JsonRpcWs.createServer();
 
@@ -86,7 +99,17 @@ server.expose('saveFile', function saveFile (params, reply) {
 
     var filename = config.projects.rootDirectory + params[0];
     var data = params[1];
+    //console.log("SAVE", params[0]);
 
+    if (params[0].indexOf("projectConfig.toml") > -1) {
+        userConf = params[1];
+        try {
+            spawnParams = toml.parse(userConf);
+            } catch (e){
+                reply("Parsing projectConfig.toml, error on line " + e.line + ", column " + e.column +
+                ": " + e.message);
+            }
+    }
     weioFiles.saveFile(filename, data, (err, res) => {
         if(err) {
                 reply(err, null);
@@ -103,29 +126,23 @@ server.expose('play', function play (params, reply) {
     // if something is still alive than kick it hard with SIGKILL
     //weioSpawn.exterminateProcess();
     console.log("PLAY NOW", config.projects.lastOpenedProject+"/projectConfig.toml");
-    
-    weioFiles.getFile(config.projects.lastOpenedProject+"/projectConfig.toml", (err, res) => {
-        try {
-            spawnParams = toml.parse(res.data);
-            console.log("WILL SPAWN", spawnParams.play.starter);
-            weioSpawn.spawnProcess(spawnParams.play.starter, (err, res) => {
-                if (err) {
-                    reply(err, null);
-                } else {
-                    //reply(null, JSON.stringify(res));
-                    reply(null, JSON.stringify("Child process started"));
-                    server.send(this.id, "pushToConsole", [res], (e, r) => {
-                        console.log(r);
-                    });
-                    console.log(res);
+
+    try {
+        console.log("WILL SPAWN", spawnParams.play.starter);
+        weioSpawn.spawnProcess(spawnParams.play.starter, (err, res) => {
+            if (err) {
+                reply(err, null);
+            } else {
+                server.send(this.id, "pushToConsole", [res], null);
+                console.log(res);
                 }
             });
         } catch (e){
             reply("Parsing projectConfig.toml, error on line " + e.line + ", column " + e.column +
             ": " + e.message);
         }
-    });
 });
+
 
 
 server.expose('stop', function stop (params, reply) {

@@ -11,18 +11,18 @@ exports.spawnProcess = function(params, done) {
 
     proc.stdout.on('data', function (data) {
       console.log('stdout: ' + data.toString());
-      done(null, {"stdout":data.toString()});
+      done(null, [data.toString(), "stdout"]);
     });
 
     proc.stderr.on('data', function (data) {
       console.log('stderr: ' + data.toString());
-      done(null, {"stderr":data.toString()});
+      done(null, [data.toString(), "stderr"]);
     });
 
     proc.on('exit', function (code) {
         if (code != null) {
             console.log('child process exited with code ' + code.toString());
-            done(null, 'child process exited with code ' + code.toString());
+            done(null, ['Child process exited with code ' + code.toString(), "stdout"]);
         }
     });
 
