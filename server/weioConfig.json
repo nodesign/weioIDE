@@ -1,7 +1,7 @@
 {
     "projects": {
         "rootDirectory": "./projects",
-        "lastOpenedProject": "./projects/runner"
+        "lastOpenedProject": "./projects/pythonRunner"
     },
     "server": {
         "webSocketServerPort": 8080,
