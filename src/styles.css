@@ -63,7 +63,7 @@ main section {
 }
 main section.on-right{
     width: 20%;
-    padding: 20px;
+    padding: 0px;
     background-color: #282828;
 }
 main section ace-editor{

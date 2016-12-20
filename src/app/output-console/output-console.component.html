@@ -1,3 +1,4 @@
+<div class="consoleTitle" (click)="touchConsole($event)" >Console</div>
 <ul>
     <li *ngFor="let line of consoleLines;" id="{{line[1]}}" class="consoleOutput">{{line[0]}}</li>
 </ul>

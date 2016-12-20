@@ -22,4 +22,8 @@ export class OutputConsoleComponent implements OnInit {
   ngOnInit() {
   }
 
+  touchConsole(e) {
+    this.consoleLines = [];
+  }
+
 }
