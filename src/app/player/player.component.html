@@ -1,12 +1,12 @@
 <p>
 
-  <button (click)="play();" class="playerButtons">
+  <button (click)="play();" class="playerButtons" [style.fill] = "playColor">
      <svg width="14.5" height="14.3">
        <polygon id="playButton" points="12.5,7.1 0,14.3 0,0 " />
     </svg>
   </button>
 
-  <button (click)="stop();" id="stopButton" class="playerButtons">
+  <button (click)="stop();" id="stopButton" class="playerButtons" [style.fill] = "stopColor">
       <svg width="14.5" height="14.3">
           <rect x="0" id="stopButton" width="14.5" height="14.3"/>
       </svg>

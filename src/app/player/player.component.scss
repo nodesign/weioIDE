@@ -1,13 +1,15 @@
 #playButton  {
-    fill:gray;
-
     &:hover {
         fill:white;
     }
+
+    &:active {
+        fill:#3cddf7;
+    }
+    
 }
 
 #stopButton {
-    fill:gray;
     margin-left: 5px;
     &:hover {
        fill:white;

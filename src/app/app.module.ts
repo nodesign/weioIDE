@@ -14,12 +14,13 @@ import { ProjectsPipe } from './projects/projects.pipe';
 import { TreeComponent } from './utils/tree/tree.component';
 import { TreePipe } from './utils/tree/tree.pipe';
 import { StatusMonitorComponent } from './status-monitor/status-monitor.component';
+import { EditorComponent } from './editor/editor.component';
+import { PlayerComponent } from './player/player.component';
 
 // services
 import { WebSocketRPC } from './websockets/webSocketRPC.service';
-import { EditorComponent } from './editor/editor.component';
-import { PlayerComponent } from './player/player.component';
 import { OutputConsoleComponent } from './output-console/output-console.component';
+import { PlayerService } from './player/player.service';
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import { OutputConsoleComponent } from './output-console/output-console.componen
     FormsModule,
     HttpModule
   ],
-  providers: [WebSocketRPC, ProjectsService],
+  providers: [WebSocketRPC, ProjectsService, PlayerService],
   bootstrap: [AppComponent],
   exports: [
     ProjectsPipe
