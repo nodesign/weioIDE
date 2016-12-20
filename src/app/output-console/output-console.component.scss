@@ -7,6 +7,18 @@
     padding-bottom: 3px;
 }
 
+
+.trashIcon {
+    text-align: right;
+    stroke: white;
+    padding-left: 0px;
+    background: transparent;
+    border: none;
+    &:focus {
+        outline: 0;
+    }
+}
+
 .consoleOutput {
     list-style: none;
     font-size:13px;

@@ -1,4 +1,18 @@
-<div class="consoleTitle" (click)="touchConsole($event)" >Console</div>
+<div class="consoleTitle"  >Console
+<span>
+<button (click)="trashConsole();" class="trashIcon">
+    <svg width="7.9" height="14.1">
+        <rect x="0.5" y="4.3" class="st0" width="6.9" height="9.3"/>
+        <g>
+            <line class="st0" x1="2.8" y1="6.1" x2="2.8" y2="11.4"/>
+            <line class="st0" x1="5.1" y1="6.1" x2="5.1" y2="11.4"/>
+        </g>
+        <line class="st0" x1="0.1" y1="2.3" x2="7.7" y2="2.3"/>
+        <line class="st0" x1="2.4" y1="0.5" x2="5.6" y2="0.5"/>
+    </svg>
+</button>
+</span>
+</div>
 <ul>
     <li *ngFor="let line of consoleLines;" id="{{line[1]}}" class="consoleOutput">{{line[0]}}</li>
 </ul>

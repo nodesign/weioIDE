@@ -22,7 +22,7 @@ export class OutputConsoleComponent implements OnInit {
   ngOnInit() {
   }
 
-  touchConsole(e) {
+  trashConsole() {
     this.consoleLines = [];
   }
 
