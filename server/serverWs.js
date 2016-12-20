@@ -133,7 +133,7 @@ server.expose('play', function play (params, reply) {
             if (err) {
                 reply(err, null);
             } else {
-                reply(null, "PLAYING");
+                //reply(null, "PLAYING");
                 server.send(this.id, "pushToConsole", [res], null);
                 console.log(res);
                 }
