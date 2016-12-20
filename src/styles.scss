@@ -1,0 +1,97 @@
+div,
+p,
+aside,
+header,
+main,
+section,
+article {
+    box-sizing: border-box;
+    position: relative;
+}
+
+button {
+    cursor: pointer;
+}
+
+html {
+    min-height: 100%;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    color: #878787;
+}
+
+body,
+app-root {
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+}
+
+header {
+    display: flex;
+    background-color: #282828;
+    .logo {
+        margin: 10px 0 13px 16px;
+    }
+    aside {
+        width: 20%;
+    }
+}
+
+main {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    margin: auto;
+    height: 100%;
+    align-content: stretch;
+    aside {
+        width: 20%;
+        padding: 20px;
+        background-color: #282828;
+        ul {
+            padding: 0;
+            margin: 0;
+            ul {
+                padding-left: 40px;
+            }
+            li {
+                list-style: none;
+                cursor: pointer;
+                margin-bottom: 10px;
+                opacity: .8;
+                transition: opacity 0.6s ease;
+                font-size: 1.3rem;
+                color: #878787;
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    section {
+        width: 60%;
+        min-height: 100%;
+        height: 800px;
+        overflow: hidden;
+        &.on-right {
+            width: 20%;
+            padding: 0px;
+            background-color: #282828;
+        }
+        ace-editor {
+            min-height: 100%;
+        }
+        p {
+            padding: 0;
+            margin: 0;
+            min-height: 100%;
+            display: flex;
+        }
+    }
+}
+
+app-status-monitor {
+    display: flex;
+}
