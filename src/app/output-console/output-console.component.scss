@@ -1,13 +1,15 @@
-.stdout {
+.consoleOutput {
     list-style: none;
-    color: white;
-    font-size:12px;
+    font-size:13px;
+    text-indent: -25px;
 }
 
-.stderr {
-    list-style: none;
+#stdout {
+    color: white;
+}
+
+#stderr {
     color: red;
-    font-size:12px;
 }
 
 

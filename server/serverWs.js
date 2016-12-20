@@ -12,7 +12,6 @@ var spawnParams = "";
 // get these config at start
 var config = fs.readFileSync("./server/weioConfig.json", 'utf8');
 
-
 try {
     config = JSON.parse(config);
 } catch (e){
@@ -21,13 +20,6 @@ try {
 }
 
 var userConf = fs.readFileSync(config.projects.lastOpenedProject+"/projectConfig.toml", 'utf8');
-
-try {
-    spawnParams = toml.parse(userConf);
-} catch (e){
-    config.log("Parsing projectConfig.toml, error on line " + e.line + ", column " + e.column +
-    ": " + e.message);
-}
 
 // END SYNC OPERATIONS. ONLY ASYNC FROM NOW ON
 
@@ -100,16 +92,6 @@ server.expose('saveFile', function saveFile (params, reply) {
     var filename = config.projects.rootDirectory + params[0];
     var data = params[1];
     //console.log("SAVE", params[0]);
-
-    if (params[0].indexOf("projectConfig.toml") > -1) {
-        userConf = params[1];
-        try {
-            spawnParams = toml.parse(userConf);
-            } catch (e){
-                reply("Parsing projectConfig.toml, error on line " + e.line + ", column " + e.column +
-                ": " + e.message);
-            }
-    }
     weioFiles.saveFile(filename, data, (err, res) => {
         if(err) {
                 reply(err, null);
@@ -118,6 +100,24 @@ server.expose('saveFile', function saveFile (params, reply) {
                 reply(null, JSON.stringify(res));
             }
     });
+
+});
+
+
+// This must be called prior to PLAY
+server.expose('readUserConfiguration', function readUserConfiguration (params, reply) {
+
+    try {
+        userConf = fs.readFileSync(config.projects.lastOpenedProject+"/projectConfig.toml", 'utf8');
+
+        spawnParams = toml.parse(userConf);
+        reply(null, "success");
+    } catch (e){
+        var reason = "Parsing projectConfig.toml, error on line " + e.line + ", column " + e.column +
+        ": " + e.message;
+        config.log(reason);
+        reply(reason);
+    }
 
 });
 
