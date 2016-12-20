@@ -124,7 +124,7 @@ server.expose('readUserConfiguration', function readUserConfiguration (params, r
 server.expose('play', function play (params, reply) {
 
     // if something is still alive than kick it hard with SIGKILL
-    //weioSpawn.exterminateProcess();
+    weioSpawn.exterminateProcess();
     console.log("PLAY NOW", config.projects.lastOpenedProject+"/projectConfig.toml");
 
     try {

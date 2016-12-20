@@ -30,12 +30,12 @@ exports.spawnProcess = function(params, done) {
 
 // first this one
 exports.killProcess = function() { // JUST SIGTERM
-    console.log("killing it");
 
     try {
         process.kill(proc.pid,"SIGTERM"); // SIGTERM
+        console.log("SIGTERM SENT");
     } catch (e) {
-        console.log(e);
+        console.log("NOTHING TO KILL");
     }
 
 }
@@ -45,7 +45,8 @@ exports.exterminateProcess = function() { // FUCK HIM HARD DANNY, SIGKILL
     console.log("killing it hard");
     try {
         process.kill(proc.pid, "SIGKILL"); // SIGKILL
+        console.log("SIGKILL SENT");
     } catch (e) {
-        console.log(e);
+        console.log("NOTHING TO KILL");
     }
 }
