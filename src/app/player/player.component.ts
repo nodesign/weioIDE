@@ -21,9 +21,21 @@ export class PlayerComponent implements OnInit {
 
   play() {
     console.log("will play now");
-     this.ws.client.send('play', [null], (error, reply) => {
-        console.log("PLAY ANSWERED",reply);
+    
+
+     this.ws.client.send('readUserConfiguration', [null], (error, reply) => {
+       if (error != null) {
+          alert(error);
+       } else {
+          console.log("CONFIG OK READY TO PLAY",reply);
+          this.ws.client.send('play', [null], (error, reply) => {
+              console.log("PLAY ANSWERED",reply);
+            }, this);
+  
+       }
       }, this);
+
+
   }
 
   stop() {
