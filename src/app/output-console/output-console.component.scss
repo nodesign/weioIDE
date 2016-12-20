@@ -3,19 +3,21 @@
     font-size: 12px;
     color: white;
     padding-left: 5px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-.trashIcon {
-    text-align: right;
-    stroke: white;
-    padding-left: 0px;
-    background: transparent;
-    border: none;
-    &:focus {
-        outline: 0;
+    .trashIcon {
+        text-align: right;
+        stroke: white;
+        padding-right: 15px;
+
+        background: transparent;
+        border: none;
+        &:focus {
+            outline: 0;
+        }
     }
 }
 
