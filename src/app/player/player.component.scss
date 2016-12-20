@@ -1,0 +1,26 @@
+#playButton  {
+    fill:gray;
+
+    &:hover {
+        fill:white;
+    }
+}
+
+#stopButton {
+    fill:gray;
+    margin-left: 5px;
+    &:hover {
+       fill:white;
+    }
+}
+
+.playerButtons {
+    padding-top: 5px;
+    padding-left: 0px;
+    background: transparent;
+    border: none;
+    &:focus {
+        outline: 0;
+    }
+
+}

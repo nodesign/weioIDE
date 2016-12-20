@@ -31,7 +31,6 @@ export class PlayerComponent implements OnInit {
           this.ws.client.send('play', [null], (error, reply) => {
               console.log("PLAY ANSWERED",reply);
             }, this);
-  
        }
       }, this);
 

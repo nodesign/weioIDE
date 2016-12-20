@@ -1,4 +1,15 @@
 <p>
-  <button (click)="play();">Play</button>
-  <button (click)="stop();">Stop</button>
+
+  <button (click)="play();" class="playerButtons">
+     <svg width="14.5" height="14.3">
+       <polygon id="playButton" points="12.5,7.1 0,14.3 0,0 " />
+    </svg>
+  </button>
+
+  <button (click)="stop();" id="stopButton" class="playerButtons">
+      <svg width="14.5" height="14.3">
+          <rect x="0" id="stopButton" width="14.5" height="14.3"/>
+      </svg>
+  </button>
+
 </p>
