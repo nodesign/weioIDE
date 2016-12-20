@@ -1,28 +1,21 @@
-#playButton  {
-    &:hover {
-        fill:white;
-    }
-
-    &:active {
-        fill:#3cddf7;
-    }
-    
-}
-
-#stopButton {
-    margin-left: 5px;
-    &:hover {
-       fill:white;
-    }
-}
-
-.playerButtons {
+button {
+    fill: gray;
     padding-top: 5px;
     padding-left: 0px;
     background: transparent;
     border: none;
+    cursor: pointer;
+
     &:focus {
         outline: 0;
     }
-
+    &:hover {
+        fill: white;
+    }
+    &.active {
+        fill: #3cddf7;
+    }
+    &.stopButton {
+        margin-left: 5px;
+    }
 }

@@ -9,8 +9,7 @@ import { PlayerService } from './player.service';
 })
 export class PlayerComponent implements OnInit {
 
-  playColor:string = "gray";
-  stopColor:string = "gray";
+  isActive = false;
   
   constructor(private ws: WebSocketRPC, private player: PlayerService) {
       this.ws.connected.subscribe((o) => {
@@ -23,17 +22,14 @@ export class PlayerComponent implements OnInit {
   }
 
   play() {
-    console.log("will play now");
+    console.log('will play now');
     
      this.ws.client.send('readUserConfiguration', [null], (error, reply) => {
        if (error != null) {
           alert(error);
        } else {
-          console.log("CONFIG OK READY TO PLAY",reply);
-          this.ws.client.send('play', [null], (error, reply) => {
-              console.log("PLAY ANSWERED",reply);
-              this.playColor = "#3cddf7";
-            });
+          this.isActive = true;
+          this.ws.client.send('play', [null]);
        }
       }, this);
 
@@ -42,7 +38,7 @@ export class PlayerComponent implements OnInit {
   stop() {
      this.ws.client.send('stop', [null], (error, reply) => {
         console.log(reply);
-        this.playColor = "gray";
+        this.isActive = false;
       }, this);
   }
 
