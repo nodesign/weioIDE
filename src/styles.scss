@@ -21,11 +21,19 @@ html {
     color: #878787;
 }
 
-body,
-app-root {
+body{
     padding: 0;
     margin: 0;
     min-height: 100%;
+    background-color: gray;
+    overflow-y: scroll;
+}
+app-root{
+    display: block;
+    width: 100%;
+    align-items: stretch;
+    align-content: stretch;
+    flex-flow: column;
 }
 
 header {
@@ -44,7 +52,7 @@ main {
     align-items: stretch;
     justify-content: flex-start;
     margin: auto;
-    height: 100%;
+    height: 100vh;
     align-content: stretch;
     aside {
         width: 20%;

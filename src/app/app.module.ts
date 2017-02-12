@@ -21,6 +21,7 @@ import { PlayerComponent } from './player/player.component';
 import { WebSocketRPC } from './websockets/webSocketRPC.service';
 import { OutputConsoleComponent } from './output-console/output-console.component';
 import { PlayerService } from './player/player.service';
+import { ModalComponent } from './utils/modal/modal.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { PlayerService } from './player/player.service';
     EditorComponent,
     AceEditorComponent,
     PlayerComponent,
-    OutputConsoleComponent
+    OutputConsoleComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
