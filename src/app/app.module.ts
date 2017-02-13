@@ -16,13 +16,15 @@ import { TreePipe } from './utils/tree/tree.pipe';
 import { StatusMonitorComponent } from './status-monitor/status-monitor.component';
 import { EditorComponent } from './editor/editor.component';
 import { PlayerComponent } from './player/player.component';
+import { ModalComponent } from './utils/modal/modal.component';
+import { SelectFileDirective } from './utils/select-file.directive';
+import { DialogComponent } from './dialog/dialog.component';
 
 // services
 import { WebSocketRPC } from './websockets/webSocketRPC.service';
 import { OutputConsoleComponent } from './output-console/output-console.component';
 import { PlayerService } from './player/player.service';
-import { ModalComponent } from './utils/modal/modal.component';
-
+import { ModalService } from './utils/modal/modal.service';
 
 @NgModule({
   declarations: [
@@ -36,14 +38,16 @@ import { ModalComponent } from './utils/modal/modal.component';
     AceEditorComponent,
     PlayerComponent,
     OutputConsoleComponent,
-    ModalComponent
+    ModalComponent,
+    SelectFileDirective,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [WebSocketRPC, ProjectsService, PlayerService],
+  providers: [WebSocketRPC, ProjectsService, PlayerService, ModalService],
   bootstrap: [AppComponent],
   exports: [
     ProjectsPipe

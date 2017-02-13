@@ -1,13 +1,15 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  entryComponents: [DialogComponent]
 })
 export class AppComponent {
 
-  constructor(private parent: ElementRef) {
-    console.log('this', this.parent, ElementRef);
+  constructor() {
+
   }
 }
