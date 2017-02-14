@@ -1,8 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WebSocketRPC } from '../websockets/webSocketRPC.service';
 import { ModalService } from '../utils/modal/modal.service';
 import { DialogComponent } from '../dialog/dialog.component';
-
 
 @Component({
   selector: 'app-status-monitor',

@@ -1,15 +1,16 @@
 import {
-  Component, OnInit, Input, Output, EventEmitter, ComponentRef, ViewContainerRef, ComponentFactoryResolver, ViewChild
+  Component, OnInit, Input, Output, EventEmitter, ComponentRef,
+  ViewContainerRef, ComponentFactoryResolver, ViewChild,
+  HostBinding
 } from '@angular/core';
 
-import { ModalService, ModalReply } from './modal.service';
-import { DialogComponent } from '../../dialog/dialog.component';
-
-const _MODAL_ = ModalComponent;
+import { ModalService } from './modal.service';
+import { ModalAnimation } from './modal.animations';
 
 @Component({
   selector: 'app-modal',
-  template: `<div class="modal">
+  template: `<div class="modal-container" [@showModal]="visible">
+  <a class="close-btn" (click)="closeMe($event)">X</a>
   <div class="header">
     {{title}}
   </div>
@@ -25,25 +26,27 @@ const _MODAL_ = ModalComponent;
     </div>
   </div>
 </div>`,
-  styleUrls: ['./modal.component.scss']
+  styleUrls: ['./modal.component.scss'],
+  animations: ModalAnimation
 })
 export class ModalComponent implements OnInit {
+
   @Input('title') title: String = '';
-  @Input('buttons') buttons: boolean = false;
-  @Input('text') text: String = '';
   @Input('value') value: string;
+
   @ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
   public componentRef: ComponentRef<any>;
   public serviceListener: EventEmitter<any>;
   public _CONTEXT_: string;
+  @Output('modalDisplay') modalDisplay: string = 'block';
 
-  constructor(private compiler: ComponentFactoryResolver, private modalService: ModalService) {
+  @HostBinding('class.hidden') hiddenClass = true;
 
-  }
+  public visible: string = 'hidden';
 
-  // On receive order
-  orderReceived(data) {
-    console.log('order received', data, this, parent);
+  constructor(private compiler: ComponentFactoryResolver,
+  private modalService: ModalService) {
+
   }
 
   renderComponent(data) {
@@ -58,6 +61,7 @@ export class ModalComponent implements OnInit {
       this.componentRef.instance.callback.subscribe(callbackData => {
         this.sendCallBackToService(callbackData);
       });
+      this.openModal();
     }
 
   }
@@ -69,7 +73,22 @@ export class ModalComponent implements OnInit {
     });
   }
 
+  // Send data to service 
   sendCallBackToService(data) {
-    this.modalService.notifyComponent({context: this._CONTEXT_, data: data});
+    this.modalService.notifyComponent({ context: this._CONTEXT_, data: data });
+  }
+
+  openModal() {
+    this.hiddenClass = false;
+    this.visible = 'visible';
+  }
+
+  closeModal() {
+    this.hiddenClass = true;
+  }
+
+  closeMe(event) {
+    this.closeModal();
+    this.modalService.notifyComponent({ context: this._CONTEXT_, data: false });
   }
 }

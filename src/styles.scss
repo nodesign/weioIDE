@@ -21,14 +21,15 @@ html {
     color: #878787;
 }
 
-body{
+body {
     padding: 0;
     margin: 0;
     min-height: 100%;
     background-color: gray;
     overflow-y: scroll;
 }
-app-root{
+
+app-root {
     display: block;
     width: 100%;
     align-items: stretch;
@@ -37,6 +38,7 @@ app-root{
 }
 
 header {
+    z-index: 0;
     display: flex;
     background-color: #282828;
     .logo {
@@ -48,6 +50,7 @@ header {
 }
 
 main {
+    z-index: 0;
     display: flex;
     align-items: stretch;
     justify-content: flex-start;
@@ -102,4 +105,49 @@ main {
 
 app-status-monitor {
     display: flex;
+}
+
+app-modal {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .6);
+    z-index: 2;
+
+    &.hidden{
+        display: none;
+    }
+
+    .modal-container {
+        background-color: rgba(255, 255, 255, 1);
+        max-width: 400px;
+        padding: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+        border-radius: 2px;
+        .close-btn {
+            content: ' ';
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #000;
+            text-align: center center;
+            color: #fff;
+            transform: translate3d(50%, -50%, 0);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.6rem;
+        }
+    }
 }
