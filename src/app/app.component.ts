@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { Component } from '@angular/core';
 import { DialogComponent } from './dialog/dialog.component';
 
 @Component({

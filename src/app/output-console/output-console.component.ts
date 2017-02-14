@@ -8,11 +8,11 @@ import { WebSocketRPC } from '../websockets/webSocketRPC.service';
 })
 export class OutputConsoleComponent implements OnInit {
 
-  consoleOutput:string = "";
-  messageType:string = "stdout";
-  consoleLines:Array<Object> = [];;
+  consoleOutput: string = "";
+  messageType: string = "stdout";
+  consoleLines: Array<Object> = [];;
 
-  constructor(private ws: WebSocketRPC) { 
+  constructor(private ws: WebSocketRPC) {
     ws.client.expose("pushToConsole", (params, reply) => {
       console.log(params);
       this.consoleLines.push(params[0]);

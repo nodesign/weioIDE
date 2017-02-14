@@ -31,7 +31,13 @@ export class StatusMonitorComponent implements OnInit {
         console.log('bad context', data);
       }
     });
-    setTimeout(() => { this.ModalService.loadComponent(this._CONTEXT_, DialogComponent, {}); }, 3000);
+    setTimeout(() => {
+      this.ModalService.loadComponent({
+        context: this._CONTEXT_,
+        component: DialogComponent,
+        data: { title: 'Dialog' }
+      });
+    }, 3000);
   }
 
   requestStatus() {

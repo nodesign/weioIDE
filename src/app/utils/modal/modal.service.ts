@@ -1,4 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { ModalReceive } from './modal.receive';
 
 export interface ModalReply {
   context: string;
@@ -13,10 +14,8 @@ export class ModalService {
 
   constructor() { }
 
-  loadComponent(context, component, opts) {
-    let cmp = { context: context, component: component, opts: opts };
-    this.toModalComponent.emit(cmp);
-    return cmp;
+  loadComponent(modalReceive: ModalReceive) {
+    this.toModalComponent.emit(modalReceive);
   }
 
   notifyComponent(ModalReply: ModalReply) {

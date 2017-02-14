@@ -1,0 +1,17 @@
+<div class="modal-container" [@showModal]="visible">
+    <a class="close-btn" (click)="closeMe($event)">X</a>
+    <div class="header">
+        {{title}}
+    </div>
+    <div class="body">
+        {{text}}
+        <div #target></div>
+        <input type="file" [appSelectFile] />
+    </div>
+    <div class="footer">
+        <div class="buttons">
+            <a class="btn save">Save</a>
+            <a class="btn cancel">Cancel</a>
+        </div>
+    </div>
+</div>

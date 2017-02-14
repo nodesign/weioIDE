@@ -1,5 +1,4 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { DialogBaseComponent } from './dialog-base.component';
 
 @Component({
   selector: 'app-dialog',
