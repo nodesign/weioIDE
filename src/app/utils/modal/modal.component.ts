@@ -2,7 +2,7 @@ import {
   Component, OnInit, Input, Output, EventEmitter, ComponentRef, ViewContainerRef, ComponentFactoryResolver, ViewChild
 } from '@angular/core';
 
-import { ModalService } from './modal.service';
+import { ModalService, ModalReply } from './modal.service';
 import { DialogComponent } from '../../dialog/dialog.component';
 
 const _MODAL_ = ModalComponent;
@@ -44,7 +44,6 @@ export class ModalComponent implements OnInit {
   // On receive order
   orderReceived(data) {
     console.log('order received', data, this, parent);
-    //this.renderComponent(data.component);
   }
 
   renderComponent(data) {
@@ -52,22 +51,25 @@ export class ModalComponent implements OnInit {
     let childComponent = data.component;
     let ComponentFactory = this.compiler.resolveComponentFactory(childComponent);
     this.componentRef = this.target.createComponent(ComponentFactory);
+
     if (this.componentRef) {
       this.componentRef.instance.value = this.value;
+      // Subscribe to component callback
+      this.componentRef.instance.callback.subscribe(callbackData => {
+        this.sendCallBackToService(callbackData);
+      });
     }
+
   }
 
   ngOnInit() {
-    let _self = this;
-
     // subscribe
     this.modalService.toModalComponent.subscribe((data) => {
-      console.log('FROM SUBSCRIBE!!!!!!!!!!!!', );
       this.renderComponent(data);
     });
   }
 
-  show() {
-    console.log('SHOW ME');
+  sendCallBackToService(data) {
+    this.modalService.notifyComponent({context: this._CONTEXT_, data: data});
   }
 }

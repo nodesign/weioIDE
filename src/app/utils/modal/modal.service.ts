@@ -1,10 +1,15 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
+export interface ModalReply {
+  context: string;
+  data: { };
+}
+
 @Injectable()
 export class ModalService {
 
   public toModalComponent: EventEmitter<any> = new EventEmitter();
-  public fromModalComponent: EventEmitter<any> = new EventEmitter();
+  public fromModalComponent: EventEmitter<ModalReply> = new EventEmitter<ModalReply>();
 
   constructor() { }
 
@@ -14,8 +19,10 @@ export class ModalService {
     return cmp;
   }
 
-  notifyComponent(context, data) {
-    this.fromModalComponent.emit({ context, data });
+  notifyComponent(ModalReply: ModalReply) {
+    this.fromModalComponent.emit(ModalReply);
   }
 
 }
+
+

@@ -3,6 +3,7 @@ import { WebSocketRPC } from '../websockets/webSocketRPC.service';
 import { ModalService } from '../utils/modal/modal.service';
 import { DialogComponent } from '../dialog/dialog.component';
 
+
 @Component({
   selector: 'app-status-monitor',
   templateUrl: './status-monitor.component.html',
@@ -11,24 +12,27 @@ import { DialogComponent } from '../dialog/dialog.component';
 
 export class StatusMonitorComponent implements OnInit {
 
-  @HostListener('click') onClick() {
-    console.log('click');
-  }
-
-  //status: string = "please wait";
-
   public ip: string;
   public battery: number;
   public wifi: number;
 
   id: string = "monitorStatus";
 
+  private _CONTEXT_ = 'STATUS_MONITOR';
+
   constructor(private ws: WebSocketRPC, private ModalService: ModalService) {
 
   }
 
   ngOnInit() {
-    setTimeout(() => { this.ModalService.loadComponent('STATUS_MONITOR', DialogComponent, {}); }, 3000);
+    this.ModalService.fromModalComponent.subscribe((data) => {
+      if (data.context === this._CONTEXT_) {
+        console.log('from modal', data);
+      } else {
+        console.log('bad context', data);
+      }
+    });
+    setTimeout(() => { this.ModalService.loadComponent(this._CONTEXT_, DialogComponent, {}); }, 3000);
   }
 
   requestStatus() {
